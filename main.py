@@ -42,6 +42,3 @@ async def analyze_image(file: UploadFile = File(...)):
 
     response = read_photo(img_bytes, file.content_type)
     return response
-    
-if __name__ == "__main__":
-    uvicorn.run("main:app", port=8000, reload=True)
