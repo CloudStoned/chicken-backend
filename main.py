@@ -15,7 +15,9 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-origins = os.getenv("DEV_ORIGINS")
+origins = [
+    "https://chicken-frontend-tau.vercel.app/"
+]
 
 app.add_middleware(
     CORSMiddleware,
