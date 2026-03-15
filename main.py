@@ -1,13 +1,9 @@
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image
-import io 
+import io
 from image_analyzer import read_photo
-import uvicorn
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
 
 app = FastAPI()
 
@@ -21,9 +17,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".heic", ".heif", ".webp", ".bmp"}
-
 
 @app.get("/")
 def home():
@@ -33,17 +27,13 @@ def home():
 async def analyze_image(file: UploadFile = File(...)):
     ext = os.path.splitext(file.filename or "")[1].lower()
     is_image = file.content_type.startswith("image/") or ext in ALLOWED_EXTENSIONS
-
     if not is_image:
         return {"error": "File must be an image"}
-
     img_bytes = await file.read()
-
     try:
         Image.open(io.BytesIO(img_bytes))
     except Exception as e:
         print(f"Image open failed: {e}")
         return {"error": "Invalid image format"}
-
     response = read_photo(img_bytes, file.content_type)
     return response
