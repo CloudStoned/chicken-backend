@@ -24,6 +24,11 @@ app.add_middleware(
 
 ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".heic", ".heif", ".webp", ".bmp"}
 
+
+@app.get("/")
+def home():
+    return {"message": "Chicken Server Running"}
+
 @app.post("/analyze-image")
 async def analyze_image(file: UploadFile = File(...)):
     ext = os.path.splitext(file.filename or "")[1].lower()
