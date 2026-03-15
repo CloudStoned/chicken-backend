@@ -4,8 +4,16 @@ from PIL import Image
 import io
 from image_analyzer import read_photo
 import os
+import logging
 
 app = FastAPI()
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 origins = os.getenv("DEV_ORIGINS")
 
@@ -33,7 +41,7 @@ async def analyze_image(file: UploadFile = File(...)):
     try:
         Image.open(io.BytesIO(img_bytes))
     except Exception as e:
-        print(f"Image open failed: {e}")
+        logger.error(f"Image open failed: {e}")
         return {"error": "Invalid image format"}
     response = read_photo(img_bytes, file.content_type)
     return response

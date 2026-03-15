@@ -1,8 +1,12 @@
 from ultralytics import YOLO
 from PIL import Image
 import io
+import logging
 
 model = YOLO("./best.pt")
+
+# Configure logger for this module
+logger = logging.getLogger(__name__)
 
 def read_photo(img_bytes: bytes, mime_type: str):
     try:
