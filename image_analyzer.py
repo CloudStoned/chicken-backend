@@ -6,7 +6,7 @@ model = YOLO("./best.pt")
 
 def read_photo(img_bytes: bytes, mime_type: str):
     try:
-        print("Reading photo...")
+        
         img = Image.open(io.BytesIO(img_bytes))
         results = model(img)
 
