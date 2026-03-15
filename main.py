@@ -16,7 +16,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 origins = [
-    "https://chicken-frontend-tau.vercel.app/"
+    "https://chicken-frontend-tau.vercel.app"
 ]
 
 app.add_middleware(
